@@ -1,47 +1,17 @@
-import { useState, useRef, useEffect } from 'react'
+// Imports :P
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom'
+import MainChat from './components/MainChat'
+import HumanPage from './components/HumanPage'
 import './App.css'
 
 function App() {
-  const [messages, setMessages] = useState([])
-  const [input, setInput] = useState('')
-  const messagesEndRef = useRef(null)
-
-  const handleSend = (e) => {
-    e.preventDefault()
-    if (input.trim() === '') return
-    setMessages([...messages, { text: input, from: 'user' }])
-    setInput('')
-  }
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
-
   return (
-    <div className="app-container">
-      <h1 className="title">The Imitation Game</h1>
-      <div className="chat-container">
-        <div className="messages">
-          {messages.map((msg, idx) => (
-            <div key={idx} className={`message ${msg.from}`}>
-              {msg.text}
-            </div>
-          ))}
-          <div ref={messagesEndRef} />
-        </div>
-        <form className="input-form" onSubmit={handleSend}>
-          <input
-            className="chat-input"
-            type="text"
-            value={input}
-            onChange={e => setInput(e.target.value)}
-            placeholder="Type your message..."
-            autoFocus
-          />
-          <button type="submit" className="send-btn">Send</button>
-        </form>
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<MainChat />} />
+        <Route path="/human" element={<HumanPage />} />
+      </Routes>
+    </Router>
   )
 }
 
