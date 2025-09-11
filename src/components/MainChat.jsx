@@ -2,6 +2,13 @@ import { useState, useRef, useEffect } from 'react'
 import { getMessages, setMessages } from '../utils/storage'
 import getRandomUsername from '../utils/getRandomUsername'
 import '../App.css'
+import OpenAI from 'openai'
+
+const openai = new OpenAI({
+  apiKey: import.meta.env.VITE_OPENAI_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
+console.log("OpenAI key:", import.meta.env.VITE_OPENAI_API_KEY);
 
 function MainChat() {
   const [messages, setMessagesState] = useState(getMessages())
@@ -114,21 +121,32 @@ function MainChat() {
   const handleSend = (e) => {
     e.preventDefault()
     if (!input.trim() || waiting) return
+  
     const newMsgs = [...messages, { text: input, from: 'user' }]
     setMessages(newMsgs)
     setMessagesState(newMsgs)
     setInput('')
     setWaiting(true)
     setPendingResponses({ ai: null, human: null })
-
+  
     // Simulate AI response with a bit of a delay
-    setTimeout(() => {
-      // Denis here is where you would call your AI API, replace aiText value with the response from API
-      const aiText = "This is the AI Message"
-      setPendingResponses(prev => ({ ...prev, ai: aiText }))
-    }, 1000)
+    setTimeout(async () => {
+      try {
+        const completion = await openai.chat.completions.create({
+          model: "gpt-3.5-turbo",
+          messages: [{ role: "user", content: input }],
+        })
+  
+        const aiText = completion.choices[0].message.content
+        console.log(aiText)
+        setPendingResponses(prev => ({ ...prev, ai: aiText }))
+      } catch (err) {
+        console.error("AI Error:", err)
+        setPendingResponses(prev => ({ ...prev, ai: "⚠️ AI error. Try again." }))
+      }
+    }, 1200)
   }
-
+  
   // function to deal with the user guess and open the corresponding modal
   const handleGuess = (anon) => {
     const pair = getLatestResponsePair()
