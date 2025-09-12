@@ -134,7 +134,10 @@ function MainChat() {
       try {
         const completion = await openai.chat.completions.create({
           model: "gpt-3.5-turbo",
-          messages: [{ role: "user", content: input }],
+          messages: [
+            { role: "system", content:"Skip any preamble and reply briefly while adhering to human-like response: this consists of generalizing your responses down without overly extending your answer. You don't have to answer by restating the question. For example: If prompted to name a fruit, you shouldn't reply with 'an apple is a fruit', rather you can reply with 'apple'."},
+            { role: "user", content: input }
+        ],
         })
   
         const aiText = completion.choices[0].message.content
