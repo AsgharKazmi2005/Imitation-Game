@@ -1,12 +1,9 @@
-# React + Vite
+# The Imitation Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This work presents a software implementation that emulates the Imitation Game with three users: an AI Agent, a human user, and a Guesser entrusted with determining whether responses are machine-generated and presented in a manner that displays the Imitation Game in a controlled environment. By logging prompts, answers, and guesser choices, the system is intended to capture the subtleties of interaction and allow for the investigation of error trends, prompting mechanisms, and success rates. As language models improve in fluency and contextual awareness, this implementation not only offers a framework for experimentation but also illustrates current difficulties in differentiating between human and AI communication.
 
-Currently, two official plugins are available:
+The application was built using React, a popular JavaScript framework [1]. React, while called a framework, is really a set of powerful libraries and hooks that allow for dynamic website functionality. In particular, the useState hook was used to manage component states throughout program execution. Additionally, the useEffect hook was used to dynamically update the chatbox as the guesser and human actor interacted. Externally, we made use of the OpenAI API [2] to fetch our AI responses. This library gave us the ability to 'humanize' the AI through custom prompting. Our application build and bundling was handled by Vite, our version control was handled through Git, and the codebase was hosted through GitHub.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Demo: [Imitation Game Demo]([https://www.youtube.com/watch?v=bgc-3AyNn5U](https://youtu.be/bgc-3AyNn5U))
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+© 2025 Asghar Kazmi & Denis Musovski. All rights reserved.
